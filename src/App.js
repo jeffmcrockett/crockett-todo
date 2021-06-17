@@ -1,6 +1,4 @@
-import React from 'react';
-import { Component } from 'react';
-import axios from 'axios';
+import React, { Component } from 'react';
 
 import './App.css';
 
@@ -8,31 +6,33 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      isClicked: false,
       todos: [],
       text: ''
     }
+  } 
+
+  textStateChange = (event) => {
+    this.setState({ text : event.target.value }) 
   }
 
-  handleClick(app) {
-    const id = app.isClicked;
-    this.setState({
-      if (this.state.isClicked = false) {
-        this.setState : true;
-      } else {
-        this.setState = false;
-      }
-    })
+  handleSubmit = (event) => {
+    event.preventDefault()
+    this.setState({ todos : [...this.state.todos, this.state.text ]})
+    this.setState({ text : "" })
   }
 
   render() {
     return (
       <div className="App">
         <header className="Header">
-          <form>
-            <button className="handlerButton" value="submit" onClick={this.handleClick}>CLICK ME!</button>
+          <form onSubmit={this.handleSubmit}>
+            <input className="todoField" type="text" value={this.state.text} onChange={this.textStateChange}></input>
+            <button className="todoButton" type="submit">Add Todo</button>
           </form> 
           <ol>
+            {this.state.todos.map((todo, index) => {
+              return <li key={index}>{todo}</li>
+            })}
           </ol>
         </header>
       </div>
